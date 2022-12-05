@@ -15,7 +15,7 @@ fn main() {
         let opponent_throw = line[0] - 'A' as u8;
         // For part 1 self_throw has the same interpretation as opponent_throw
         // For part 2 a win is 2, a draw is 1, and a loss is 0
-        let self_throw =  line[2] - 'X' as u8;
+        let self_throw = line[2] - 'X' as u8;
         // Taking a difference %3 can give us the result of a game
         // Adding 4 instead of 1 is to prevent underflow
         score_part_1 += (1 + self_throw + (self_throw + 4 - opponent_throw) % 3 * 3) as u32;

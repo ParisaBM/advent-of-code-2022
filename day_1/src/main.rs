@@ -5,9 +5,9 @@ use std::path::Path;
 fn main() {
     let file = File::open(Path::new("input")).unwrap();
     let lines = io::BufReader::new(file).lines();
+
     let mut highest_sums = [0; 3];
     let mut current_sum = 0;
-
     for line in lines {
         let line = line.unwrap();
 
