@@ -22,10 +22,12 @@ fn main() {
             current_sum += line.parse::<i32>().unwrap();
         }
     }
+    //We do one extra iteration for the last grouping
     for i in 0..3 {
         if current_sum > highest_sums[i] {
             swap(&mut current_sum, &mut highest_sums[i]);
         }
     }
-    println!("{}", highest_sums.iter().sum::<i32>());
+    println!("Part 1: {}", highest_sums[0]);
+    println!("Part 2: {}", highest_sums.iter().sum::<i32>());
 }
