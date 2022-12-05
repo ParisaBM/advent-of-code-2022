@@ -7,8 +7,10 @@ fn main() {
     let lines = io::BufReader::new(file).lines();
     let mut highest_sums = [0; 3];
     let mut current_sum = 0;
+
     for line in lines {
         let line = line.unwrap();
+
         if line.is_empty() {
             for i in 0..3 {
                 if current_sum > highest_sums[i] {
