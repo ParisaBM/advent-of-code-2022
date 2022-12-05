@@ -1,6 +1,5 @@
 use std::fs::File;
 use std::io::{self, BufRead};
-use std::iter;
 use std::mem::swap;
 use std::path::Path;
 fn main() {
