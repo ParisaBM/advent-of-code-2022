@@ -1,7 +1,7 @@
+use std::collections::HashSet;
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
-use std::collections::HashSet;
 fn main() {
     let file = File::open(Path::new("input")).unwrap();
     let lines = io::BufReader::new(file).lines();
@@ -23,16 +23,20 @@ fn main() {
             match direction {
                 "R" => rope_segments[0].0 += 1,
                 "L" => rope_segments[0].0 -= 1,
-                "U" => rope_segments[0].1 += 1, 
+                "U" => rope_segments[0].1 += 1,
                 "D" => rope_segments[0].1 -= 1,
                 _ => panic!("bad direction"),
             }
             // This loop causes all the tails to follow
             for i in 0..9 {
-                if (rope_segments[i].0 - rope_segments[i+1].0).abs() >= 2 || (rope_segments[i].1 - rope_segments[i+1].1).abs() >= 2 {
-                    rope_segments[i+1].0 += (rope_segments[i].0 - rope_segments[i+1].0).signum();
-                    rope_segments[i+1].1 += (rope_segments[i].1 - rope_segments[i+1].1).signum();
-                }    
+                if (rope_segments[i].0 - rope_segments[i + 1].0).abs() >= 2
+                    || (rope_segments[i].1 - rope_segments[i + 1].1).abs() >= 2
+                {
+                    rope_segments[i + 1].0 +=
+                        (rope_segments[i].0 - rope_segments[i + 1].0).signum();
+                    rope_segments[i + 1].1 +=
+                        (rope_segments[i].1 - rope_segments[i + 1].1).signum();
+                }
             }
             // We add at the end of each iteration
             // This doesn't omit the starting position because the tail doesn't move on the first iteration
