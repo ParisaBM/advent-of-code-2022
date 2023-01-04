@@ -78,7 +78,27 @@ fn main() {
         .collect();
     let start = valve_pressures.iter().position(|x| *x == 0).unwrap();
     println!("{:?}", valve_pressures);
-    println!("{}", max_release(&reduced_matrix, &valve_pressures, 30, &mut vec![false; valve_pressures.len()], start));
+    println!(
+        "{}",
+        max_release(
+            &reduced_matrix,
+            &valve_pressures,
+            30,
+            &mut vec![false; valve_pressures.len()],
+            start
+        )
+    );
+    println!(
+        "{}",
+        max_release_2_agents(
+            &reduced_matrix,
+            &valve_pressures,
+            26,
+            &mut vec![false; valve_pressures.len()],
+            start,
+            start
+        )
+    );
 }
 
 fn max_release(
@@ -98,9 +118,38 @@ fn max_release(
             continue;
         }
         visited[next] = true;
-        let score = pressure[next] * new_time + max_release(matrix, pressure, new_time, visited, next);
+        let score =
+            pressure[next] * new_time + max_release(matrix, pressure, new_time, visited, next);
         visited[next] = false;
         optimum = optimum.max(score);
     }
+    return optimum;
+}
+
+fn max_release_2_agents(
+    matrix: &Vec<Vec<i32>>,
+    pressure: &Vec<i32>,
+    time: i32,
+    visited: &mut Vec<bool>,
+    location: usize,
+    starting_location: usize,
+) -> i32 {
+    let mut optimum = 0;
+    for next in 0..visited.len() {
+        if visited[next] {
+            continue;
+        }
+        let new_time = time - matrix[location][next] - 1;
+        if new_time <= 0 {
+            continue;
+        }
+        visited[next] = true;
+        let score = pressure[next] * new_time
+            + max_release_2_agents(matrix, pressure, new_time, visited, next, starting_location);
+        visited[next] = false;
+        optimum = optimum.max(score);
+    }
+    let score = max_release(matrix, pressure, 26, visited, starting_location);
+    optimum = optimum.max(score);
     return optimum;
 }
